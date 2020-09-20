@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Offline Static Site</title>
+  <script src="jquery.min.js"></script>
+</head>
+
+<body>
+
+  <h1>Offline page</h1>
+
+  <br><br>
+
+  <button id="register">Register Service Worker</button>
+
+  <br><br><br>
+
+  <h1>
+  	<span id="message"></span>
+  </h1>
+
+</body>
+
+<script>
+
+$("#register").on("click",function() {
+
+	$('#message').text("Registering...");
+
+    // Listen to messages from service workers.
+    navigator.serviceWorker.addEventListener('message', function(event) {
+    	var sw_message = event.data;
+    	if(sw_message == "registered") {
+    		$('#message').text("Registered.");
+    	}
+      console.log("[index.html] Got reply from service worker: " + event.data);
+    });
+
+    navigator.serviceWorker.register("sw.js");
+
+});
+
+</script>
+
+</html>
